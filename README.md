@@ -4,6 +4,14 @@ An easy way to add popover menus visually similar to the [Context Menus](https:/
 
 ![Chidori Menu](chidori-menu.png)
 
+With a very simple API:
+
+```swift
+let chidoriMenu = ChidoriMenu(menu: someReusedInstanceOfUIMenu, summonPoint: CGPoint(x: 100.0, y: 100.0))
+chidoriMenu.delegate = self
+present(chidoriMenu, animated: true, completion: nil)
+```
+
 ### Why?
 
 - Pull Down menus were introduced in iOS 14, and look great, effectively marrying UIActionController and Context Menus from iOS 13, but are only available on iOS 14. This library works on iOS 13 as well.
