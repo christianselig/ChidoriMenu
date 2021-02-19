@@ -100,11 +100,13 @@ Easy peasy. And I'm pretty dang sure there's no retain cycle issues here, as you
 
 Custom view controller transitions are hard. One thing I'm jealous of with Apple's Pull Down Menu implementation that I can't quite lock down with mine is that their view controller presentation is completely interruptable, you can tap outside the menu ***while it's being presented*** and it'll cancel the presentation and just return to square one. I cannot figure out how to do this for the life of me. Is it really important? No, not really, the animation is 0.4 seconds long, I doubt people would really notice, but it's bugging me deeply, I love that fluid nature of iOS animations. Here's a GIF showing what I mean (Slow Animations is enabled in iOS Simulator to make it easier to see):
 
-[]![iOS Context Menu showing cancellable nature](ios-context-menu.gif)
+![iOS Context Menu showing cancellable nature](ios-context-menu.gif)
 
 This library just uses a standard, non-interactive view controller transition to present the menu, but if anyone can figure out how to transform the current implementation into one that is interruptable, you'd be my favorite iOS developer in the world. 
 
 For some more details on this, I wrote on my blog about my trials and tribulations trying to achieve this with interruptibleAnimators, interactive transitions, and more, to no avail: 
+
+[https://christianselig.com/2021/02/interruptible-view-controller-transitions/](https://christianselig.com/2021/02/interruptible-view-controller-transitions/)
 
 ### License
 
