@@ -17,7 +17,7 @@ present(chidoriMenu, animated: true, completion: nil)
 - Pull Down menus were introduced in iOS 14, and look great, effectively marrying UIActionController and Context Menus from iOS 13, but are only available on iOS 14. This library works on iOS 13 as well.
 - Even with an iOS 14 only target, the Pull Down Menus API is a little rigid for how I personally would like to use it, where it needs to be paired with a component like a `UIButton`. Further, if it's not a `UIButton` or `UIBarButtonItem` (which have an easy to use, direct `menu` property), such as an arbitrary `UIControl`, it seemingly requires subclassing the `UIControl` and implementing some methods. This doesn't work for me because A) I don't control all of my `UIControl` subclasses (some are handy ones from libraries) and B) even if I did, I still couldn't present it from say, an arbitrary `UITapGestureRecognizer` (to my knowledge).
 
-All that to say I wanted a system that didn't care where it came from, or require any special delegate method implementation, similar to how `UIActionController` (in action sheet mode), just presents it from a location on screen, and have it work on iOS 13 as well as a bonus, so I don't have to juggle two systems (`UIAlertController` on iOS 13, and `UIMenu` on iOS 14).
+All that to say I wanted a system that didn't care where it came from, or require any special subclassing or delegate method implementation, similar to how `UIActionController` (in action sheet mode), just presents it from a location on screen, and have it work on iOS 13 as well as a bonus, so I don't have to juggle two systems (`UIAlertController` on iOS 13, and `UIMenu` on iOS 14).
 
 ### Installation
 
