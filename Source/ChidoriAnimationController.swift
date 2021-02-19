@@ -1,0 +1,92 @@
+//
+//  ChidoriAnimationController.swift
+//  Chidori
+//
+//  Created by Christian Selig on 2021-02-15.
+//
+
+import UIKit
+
+class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+    enum AnimationControllerType { case presentation, dismissal }
+    
+    let type: AnimationControllerType
+    
+    var animatorForCurrentSession: UIViewPropertyAnimator?
+    
+    init(type: AnimationControllerType) {
+        self.type = type
+    }
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.4
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let interruptableAnimator = interruptibleAnimator(using: transitionContext)
+        
+        if type == .presentation {
+            if let chidoriMenu: ChidoriMenu = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as? ChidoriMenu {
+                transitionContext.containerView.addSubview(chidoriMenu.view)
+            }
+        }
+        
+        interruptableAnimator.startAnimation()
+    }
+        
+    func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+        if let animatorForCurrentSession = animatorForCurrentSession {
+            return animatorForCurrentSession
+        }
+        
+        let propertyAnimator = UIViewPropertyAnimator(duration: transitionDuration(using: transitionContext), dampingRatio: 0.75)
+        propertyAnimator.isInterruptible = true
+        propertyAnimator.isUserInteractionEnabled = true
+        
+        let isPresenting = type == .presentation
+        
+        guard let chidoriMenu: ChidoriMenu = {
+            return (isPresenting ? transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) : transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)) as? ChidoriMenu
+        }() else {
+            preconditionFailure("Menu should be accessible")
+        }
+        
+        let finalFrame = transitionContext.finalFrame(for: chidoriMenu)
+        chidoriMenu.view.frame = finalFrame
+        
+        // Rather than moving the origin of the view's frame for the animation (which is causing issues with jumpiness), just translate the view temporarily.
+        // Accomplish this by finding out how far we have to translate it by creating a reference point from the center of the menu we're moving, and compare that to the center point of where we're moving it to (we're moving it to a specific coordinate, not a frame, so the center point is the same as the coordinate)
+        let translationRequired = calculateTranslationRequired(forChidoriMenuFrame: finalFrame, toDesiredPoint: chidoriMenu.summonPoint)
+        
+        let initialAlpha: CGFloat = isPresenting ? 0.0 : 1.0
+        let finalAlpha: CGFloat = isPresenting ? 1.0 : 0.0
+        
+        let translatedAndScaledTransform = CGAffineTransform(translationX: translationRequired.dx, y: translationRequired.dy).scaledBy(x: 0.05, y: 0.05)
+        let initialTransform = isPresenting ? translatedAndScaledTransform : .identity
+        let finalTransform = isPresenting ? .identity : translatedAndScaledTransform
+        
+        chidoriMenu.view.transform = initialTransform
+        chidoriMenu.view.alpha = initialAlpha
+        
+        // Animate! 🪄
+        propertyAnimator.addAnimations {
+            chidoriMenu.view.transform = finalTransform
+            chidoriMenu.view.alpha = finalAlpha
+        }
+        
+        propertyAnimator.addCompletion { (position) in
+            guard position == .end else { return }
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            self.animatorForCurrentSession = nil
+        }
+        
+        self.animatorForCurrentSession = propertyAnimator
+        return propertyAnimator
+    }
+    
+    private func calculateTranslationRequired(forChidoriMenuFrame chidoriMenuFrame: CGRect, toDesiredPoint desiredPoint: CGPoint) -> CGVector {
+        let centerPointOfMenuView = CGPoint(x: chidoriMenuFrame.origin.x + (chidoriMenuFrame.width / 2.0), y: chidoriMenuFrame.origin.y + (chidoriMenuFrame.height / 2.0))
+        let translationRequired = CGVector(dx: desiredPoint.x - centerPointOfMenuView.x, dy: desiredPoint.y - centerPointOfMenuView.y)
+        return translationRequired
+    }
+}
