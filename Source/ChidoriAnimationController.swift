@@ -39,7 +39,7 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
             return animatorForCurrentSession
         }
         
-        let propertyAnimator = UIViewPropertyAnimator(duration: transitionDuration(using: transitionContext), dampingRatio: 0.75)
+        let propertyAnimator = UIViewPropertyAnimator(duration: transitionDuration(using: transitionContext), dampingRatio: 0.8)
         propertyAnimator.isInterruptible = true
         propertyAnimator.isUserInteractionEnabled = true
         
@@ -61,7 +61,7 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
         let initialAlpha: CGFloat = isPresenting ? 0.0 : 1.0
         let finalAlpha: CGFloat = isPresenting ? 1.0 : 0.0
         
-        let translatedAndScaledTransform = CGAffineTransform(translationX: translationRequired.dx, y: translationRequired.dy).scaledBy(x: 0.05, y: 0.05)
+        let translatedAndScaledTransform = CGAffineTransform(translationX: translationRequired.dx, y: translationRequired.dy).scaledBy(x: 0.25, y: 0.05)
         let initialTransform = isPresenting ? translatedAndScaledTransform : .identity
         let finalTransform = isPresenting ? .identity : translatedAndScaledTransform
         

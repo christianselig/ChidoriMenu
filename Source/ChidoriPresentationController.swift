@@ -22,6 +22,10 @@ class ChidoriPresentationController: UIPresentationController {
         }
         
         darkOverlayView.translatesAutoresizingMaskIntoConstraints = false
+        darkOverlayView.isUserInteractionEnabled = true
+        darkOverlayView.isAccessibilityElement = true
+        darkOverlayView.accessibilityTraits = .button
+        darkOverlayView.accessibilityHint = "Dismiss context menu"
         
         // This is the only part where we depart from the iOS design, I find the background doesn't darken enough with the iOS one to provide enough contrast/attention, so add a bit more (the haptic-touch context menu variant blurs the background, which this one does not do)
         darkOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.2)

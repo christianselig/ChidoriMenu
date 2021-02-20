@@ -54,8 +54,7 @@ private lazy var sampleMenu: UIMenu = {
     let saveAction = UIAction(title: "Save", image: UIImage(systemName: "bookmark"), identifier: saveIdentifier, handler: save(action:))
     postActions.append(saveAction)
     
-    let postMenu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: postActions)
-            
+    let postMenu = UIMenu(title: "", image: nil, identifier: nil, options: [.displayInline], children: postActions)
     return postMenu
 }()
 
@@ -82,6 +81,8 @@ postActions.append(upvoteAction)
 And then in the delegate method:
 
 ```swift
+var actionMappings: [UIAction.Identifier: UIActionHandler] = [:]
+
 func didSelectAction(_ action: UIAction) {
     actionMappings[action.identifier]?(action)
 }
@@ -107,7 +108,3 @@ This library just uses a standard, non-interactive view controller transition to
 For some more details on this, I wrote on my blog about my trials and tribulations trying to achieve this with interruptibleAnimators, interactive transitions, and more, to no avail: 
 
 [https://christianselig.com/2021/02/interruptible-view-controller-transitions/](https://christianselig.com/2021/02/interruptible-view-controller-transitions/)
-
-### License
-
-I don't care just don't do illegal stuff. Sell it, copy it, rename it, attribute it to me, don't attribute it to me, open source use, commercial use, submarine use, have fun!

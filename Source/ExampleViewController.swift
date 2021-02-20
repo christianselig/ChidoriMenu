@@ -43,7 +43,7 @@ class ExampleViewController: UIViewController {
         let saveAction = UIAction(title: "Save", image: UIImage(systemName: "bookmark"), identifier: ident3, handler: downvote(action:))
         postActions.append(saveAction)
         
-        let postMenu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: postActions)
+        let postMenu = UIMenu(title: "", image: nil, identifier: nil, options: [.displayInline], children: postActions)
         
         var shareActions: [UIMenuElement] = []
     
@@ -53,21 +53,21 @@ class ExampleViewController: UIViewController {
         let shareAsImageAction = UIAction(title: "Share as Image", image: UIImage(systemName: "photo"), identifier: nil, handler: downvote(action:))
         shareActions.append(shareAsImageAction)
     
-        let shareMenu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: shareActions)
+        let shareMenu = UIMenu(title: "", image: nil, identifier: nil, options: [.displayInline], children: shareActions)
         
         return UIMenu(title: "", image: nil, identifier: nil, options: [.displayInline], children: [postMenu, shareMenu])
     }()
     
-    private func save(action: UIAction) {
-        print("Saved called")
+    private func upvote(action: UIAction) {
+        print("Upvote called")
     }
-    
+
     private func downvote(action: UIAction) {
         print("Downvote called")
     }
-    
-    private func upvote(action: UIAction) {
-        print("Upvote called")
+
+    private func save(action: UIAction) {
+        print("Saved called")
     }
 }
 

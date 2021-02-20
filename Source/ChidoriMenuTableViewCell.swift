@@ -28,6 +28,14 @@ class ChidoriMenuTableViewCell: UITableViewCell {
         }
     }
     
+    override var accessibilityHint: String? {
+        get {
+            return menuTitle
+        } set {
+            super.accessibilityHint = newValue
+        }
+    }
+    
     private let stackView: UIStackView = UIStackView()
     private let menuTitleLabel: UILabel = UILabel()
     private let iconImageView: UIImageView = UIImageView()
@@ -36,6 +44,7 @@ class ChidoriMenuTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
+        accessibilityTraits = [.button]
         
         menuTitleLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .regular)
         menuTitleLabel.translatesAutoresizingMaskIntoConstraints = false
