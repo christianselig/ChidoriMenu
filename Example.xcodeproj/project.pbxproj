@@ -17,7 +17,6 @@
 		22109B8325E1677500C1B423 /* ChidoriPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22109B7E25E1677400C1B423 /* ChidoriPresentationController.swift */; };
 		22109B8425E1677500C1B423 /* ChidoriMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22109B7F25E1677400C1B423 /* ChidoriMenuTableViewCell.swift */; };
 		22109B8525E1677500C1B423 /* ChidoriAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22109B8025E1677400C1B423 /* ChidoriAnimationController.swift */; };
-		22109B8925E16AE000C1B423 /* ChidoriOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22109B8825E16AE000C1B423 /* ChidoriOverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +32,6 @@
 		22109B7E25E1677400C1B423 /* ChidoriPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChidoriPresentationController.swift; sourceTree = "<group>"; };
 		22109B7F25E1677400C1B423 /* ChidoriMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChidoriMenuTableViewCell.swift; sourceTree = "<group>"; };
 		22109B8025E1677400C1B423 /* ChidoriAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChidoriAnimationController.swift; sourceTree = "<group>"; };
-		22109B8825E16AE000C1B423 /* ChidoriOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChidoriOverlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +82,6 @@
 				22109B7D25E1677400C1B423 /* ChidoriMenu.swift */,
 				22109B7E25E1677400C1B423 /* ChidoriPresentationController.swift */,
 				22109B7F25E1677400C1B423 /* ChidoriMenuTableViewCell.swift */,
-				22109B8825E16AE000C1B423 /* ChidoriOverlayView.swift */,
 				22109B8025E1677400C1B423 /* ChidoriAnimationController.swift */,
 			);
 			path = Source;
@@ -162,7 +159,6 @@
 			files = (
 				22109B7525E166EC00C1B423 /* AppDelegate.swift in Sources */,
 				22109B8225E1677400C1B423 /* ChidoriMenu.swift in Sources */,
-				22109B8925E16AE000C1B423 /* ChidoriOverlayView.swift in Sources */,
 				22109B8525E1677500C1B423 /* ChidoriAnimationController.swift in Sources */,
 				22109B8325E1677500C1B423 /* ChidoriPresentationController.swift in Sources */,
 				22109B8425E1677500C1B423 /* ChidoriMenuTableViewCell.swift in Sources */,
