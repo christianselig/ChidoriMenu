@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol ChidoriPresentationControllerDelegate: NSObjectProtocol {
+    func didTapOverlayView(_ chidoriPresentationController: ChidoriPresentationController)
+}
+
 class ChidoriPresentationController: UIPresentationController {
     let darkOverlayView: UIView = UIView()
     let tapGestureRecognizer = UITapGestureRecognizer(target: nil, action: nil)
-    
+
+    weak var transitionDelegate: ChidoriPresentationControllerDelegate?
+
     // MARK: - Animation Lifecycle
     
     override func presentationTransitionWillBegin() {
@@ -127,6 +133,6 @@ class ChidoriPresentationController: UIPresentationController {
     // MARK: - Target Action
     
     @objc private func tappedDarkOverlayView(tapGestureRecognizer: UITapGestureRecognizer) {
-        presentedViewController.dismiss(animated: true, completion: nil)
+        transitionDelegate?.didTapOverlayView(self)
     }
 }
