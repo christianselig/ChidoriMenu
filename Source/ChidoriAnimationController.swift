@@ -37,7 +37,6 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
         context.cancelInteractiveTransition()
 
          // Play the animation in reverse
-        animator.pauseAnimation()
         animator.isReversed = true
         animator.startAnimation()
     }
