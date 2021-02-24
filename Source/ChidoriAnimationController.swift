@@ -39,17 +39,35 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
          // Play the animation in reverse
         animator.isReversed = true
         animator.startAnimation()
+
+        if type == .presentation {
+            if let presentingViewController = context.viewController(forKey: .from) {
+                presentingViewController.view.tintAdjustmentMode = .automatic
+            } else {
+                preconditionFailure("Presenting view controller should be accessible")
+            }
+        }
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let interruptableAnimator = interruptibleAnimator(using: transitionContext)
-        
+
         if type == .presentation {
             if let chidoriMenu: ChidoriMenu = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as? ChidoriMenu {
                 transitionContext.containerView.addSubview(chidoriMenu.view)
             }
+
+            if let presentingViewController = transitionContext.viewController(forKey: .from) {
+                presentingViewController.view.tintAdjustmentMode = .dimmed
+            } else {
+                preconditionFailure("Presenting view controller should be accessible")
+            }
+        } else {
+            if let presentingViewController = transitionContext.viewController(forKey: .to) {
+                presentingViewController.view.tintAdjustmentMode = .automatic
+            }
         }
-        
+
         interruptableAnimator.startAnimation()
     }
         
