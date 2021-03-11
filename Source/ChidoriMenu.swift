@@ -25,6 +25,9 @@ class ChidoriMenu: UIViewController {
     let panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     weak var delegate: ChidoriDelegate?
+
+    /// Stores a reference to the current tranisiton controller to share between animation and interaction roles
+    var transitionController: ChidoriAnimationController?
     
     // Constants that match the iOS version
     static let width: CGFloat = 250.0
@@ -82,7 +85,13 @@ class ChidoriMenu: UIViewController {
             
         addInitialData()
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        // Once the transition is over, we can nil out the transition controller
+        // and simply dismiss this view controller as normal
+        transitionController = nil
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
      
@@ -237,15 +246,30 @@ extension ChidoriMenu {
 
 extension ChidoriMenu: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return ChidoriAnimationController(type: .presentation)
+        transitionController = ChidoriAnimationController(type: .presentation)
+        return transitionController
     }
-    
+
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return transitionController
+    }
+
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return ChidoriAnimationController(type: .dismissal)
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return ChidoriPresentationController(presentedViewController: presented, presenting: presenting)
+        let controller = ChidoriPresentationController(presentedViewController: presented, presenting: presenting)
+        controller.transitionDelegate = self
+        return controller
+    }
+}
+
+// MARK: - Presentation Controller Interactive Delegate
+extension ChidoriMenu: ChidoriPresentationControllerDelegate {
+    func didTapOverlayView(_ chidoriPresentationController: ChidoriPresentationController) {
+        transitionController?.cancelTransition()
+        dismiss(animated: true, completion: nil)
     }
 }
 
