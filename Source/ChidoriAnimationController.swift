@@ -7,29 +7,29 @@
 
 import UIKit
 
-class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning {
-    enum AnimationControllerType { case presentation, dismissal }
+public class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning {
+    public enum AnimationControllerType { case presentation, dismissal }
     
-    let type: AnimationControllerType
+    public let type: AnimationControllerType
     
-    var animatorForCurrentSession: UIViewPropertyAnimator?
+    public var animatorForCurrentSession: UIViewPropertyAnimator?
 
-    weak var context: UIViewControllerContextTransitioning?
+    public weak var context: UIViewControllerContextTransitioning?
     
-    init(type: AnimationControllerType) {
+    public init(type: AnimationControllerType) {
         self.type = type
     }
     
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
 
-    func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
+    public func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         context = transitionContext
         animateTransition(using: transitionContext)
     }
 
-     func cancelTransition() {
+    public func cancelTransition() {
         guard let context = context,
               let animator = animatorForCurrentSession else { return }
 
@@ -49,7 +49,7 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
         }
     }
     
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let interruptableAnimator = interruptibleAnimator(using: transitionContext)
 
         if type == .presentation {
@@ -71,7 +71,7 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
         interruptableAnimator.startAnimation()
     }
         
-    func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+    public func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
         if let animatorForCurrentSession = animatorForCurrentSession {
             return animatorForCurrentSession
         }
@@ -84,7 +84,7 @@ class ChidoriAnimationController: NSObject, UIViewControllerAnimatedTransitionin
         
         guard let chidoriMenu: ChidoriMenu = {
             return (isPresenting ? transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) : transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)) as? ChidoriMenu
-        }() else {
+        } () else {
             preconditionFailure("Menu should be accessible")
         }
         

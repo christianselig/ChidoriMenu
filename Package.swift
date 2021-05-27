@@ -20,7 +20,8 @@ let package = Package(
         .target(
             name: "ChidoriMenu",
             dependencies: [],
-            path: "Source"
+            path: "Source",
+            exclude: ["Source/ExampleViewController.swift"]
         ),
     ]
 )

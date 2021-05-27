@@ -7,14 +7,14 @@
 
 import UIKit
 
-class ChidoriMenuTableViewCell: UITableViewCell {
-    var menuTitle: String = "" {
+public class ChidoriMenuTableViewCell: UITableViewCell {
+    public var menuTitle: String = "" {
         didSet {
             menuTitleLabel.text = menuTitle
         }
     }
     
-    var isDestructive: Bool = false {
+    public var isDestructive: Bool = false {
         didSet {
             let color: UIColor = isDestructive ? .systemRed : .label
             menuTitleLabel.textColor = color
@@ -22,13 +22,13 @@ class ChidoriMenuTableViewCell: UITableViewCell {
         }
     }
     
-    var iconImage: UIImage? {
+    public var iconImage: UIImage? {
         didSet {
             iconImageView.image = iconImage
         }
     }
     
-    override var accessibilityHint: String? {
+    public override var accessibilityHint: String? {
         get {
             return menuTitle
         } set {
@@ -40,7 +40,7 @@ class ChidoriMenuTableViewCell: UITableViewCell {
     private let menuTitleLabel: UILabel = UILabel()
     private let iconImageView: UIImageView = UIImageView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
@@ -73,15 +73,16 @@ class ChidoriMenuTableViewCell: UITableViewCell {
         backgroundColor = .clear
     }
 
-    required init?(coder aDecoder: NSCoder) { fatalError("\(#file) does not implement coder.") }
+    @available(*, unavailable, message: "Please initialize ChidoriMenuTableViewCell programmatically.")
+    public required init?(coder aDecoder: NSCoder) { fatalError("\(#file) does not implement coder.") }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         backgroundColor = selected ? UIColor(white: 0.5, alpha: 0.2) : .clear
     }
     
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+    public override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setSelected(highlighted, animated: animated)
         
         backgroundColor = highlighted ? UIColor(white: 0.5, alpha: 0.2) : .clear
