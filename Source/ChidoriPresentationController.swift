@@ -7,19 +7,19 @@
 
 import UIKit
 
-protocol ChidoriPresentationControllerDelegate: NSObjectProtocol {
+public protocol ChidoriPresentationControllerDelegate: NSObjectProtocol {
     func didTapOverlayView(_ chidoriPresentationController: ChidoriPresentationController)
 }
 
-class ChidoriPresentationController: UIPresentationController {
-    let darkOverlayView: UIView = UIView()
-    let tapGestureRecognizer = UITapGestureRecognizer(target: nil, action: nil)
+public class ChidoriPresentationController: UIPresentationController {
+    public let darkOverlayView: UIView = UIView()
+    public let tapGestureRecognizer = UITapGestureRecognizer(target: nil, action: nil)
 
-    weak var transitionDelegate: ChidoriPresentationControllerDelegate?
+    public weak var transitionDelegate: ChidoriPresentationControllerDelegate?
 
     // MARK: - Animation Lifecycle
     
-    override func presentationTransitionWillBegin() {
+    public override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
 
         guard let containerView = containerView else {
@@ -57,7 +57,7 @@ class ChidoriPresentationController: UIPresentationController {
         }
     }
     
-    override func dismissalTransitionWillBegin() {
+    public override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
         
         presentingViewController.view.tintAdjustmentMode = .automatic
@@ -69,7 +69,7 @@ class ChidoriPresentationController: UIPresentationController {
         }
     }
     
-    override func dismissalTransitionDidEnd(_ completed: Bool) {
+    public override func dismissalTransitionDidEnd(_ completed: Bool) {
         super.dismissalTransitionDidEnd(completed)
         
         if completed {
@@ -79,7 +79,7 @@ class ChidoriPresentationController: UIPresentationController {
     
     // MARK: - Layouting
     
-    override var frameOfPresentedViewInContainerView: CGRect {
+    public override var frameOfPresentedViewInContainerView: CGRect {
         guard let chidoriMenu = presentedViewController as? ChidoriMenu else {
             preconditionFailure("Should only be used with ChidoriMenu")
         }
@@ -91,7 +91,7 @@ class ChidoriPresentationController: UIPresentationController {
         return CGRect(origin: originatingPoint, size: menuSize)
     }
     
-    func maxHeight() -> CGFloat {
+    public func maxHeight() -> CGFloat {
         guard let containerView = containerView else {
             assertionFailure("Container view should be present at this point")
             return 0.0

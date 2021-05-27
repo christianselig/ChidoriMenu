@@ -7,34 +7,34 @@
 
 import UIKit
 
-class ChidoriMenu: UIViewController {
-    let tableView: UITableView = UITableView(frame: .zero, style: .plain)
+public class ChidoriMenu: UIViewController {
+    public let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     private lazy var dataSource = makeDataSource()
     private static let cellReuseIdentifier = "MenuCell"
     
     /// The backing object that acts as the basis for the basis for the menu
-    let menu: UIMenu
+    public let menu: UIMenu
     
     /// Where in the window the menu is being summond from
-    let summonPoint: CGPoint
+    public let summonPoint: CGPoint
     
-    let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialLight))
+    public let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialLight))
     private let shadowLayer = CALayer()
     
     ///Used to power the "drag to select" functionality like the iOS version
     let panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
-    weak var delegate: ChidoriDelegate?
+    public weak var delegate: ChidoriDelegate?
 
     /// Stores a reference to the current tranisiton controller to share between animation and interaction roles
-    var transitionController: ChidoriAnimationController?
+    public var transitionController: ChidoriAnimationController?
     
     // Constants that match the iOS version
-    static let width: CGFloat = 250.0
-    static let cornerRadius: CGFloat = 13.0
-    static let shadowRadius: CGFloat = 25.0
+    public static let width: CGFloat = 250.0
+    public static let cornerRadius: CGFloat = 13.0
+    public static let shadowRadius: CGFloat = 25.0
     
-    init(menu: UIMenu, summonPoint: CGPoint) {
+    public init(menu: UIMenu, summonPoint: CGPoint) {
         self.menu = menu
         self.summonPoint = summonPoint
         
@@ -44,9 +44,9 @@ class ChidoriMenu: UIViewController {
         transitioningDelegate = self
     }
     
-    required init?(coder aDecoder: NSCoder) { fatalError("\(#file) does not implement coder.") }
+    public required init?(coder aDecoder: NSCoder) { fatalError("\(#file) does not implement coder.") }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         // Can't have masksToBounds = true for corner radius on the layer *and* have a drop shadow, so some extra steps are required
@@ -86,13 +86,13 @@ class ChidoriMenu: UIViewController {
         addInitialData()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         // Once the transition is over, we can nil out the transition controller
         // and simply dismiss this view controller as normal
         transitionController = nil
     }
 
-    override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
      
         visualEffectView.frame = view.bounds
@@ -165,7 +165,7 @@ class ChidoriMenu: UIViewController {
         dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
     }
     
-    func height() -> CGFloat {
+    public func height() -> CGFloat {
         let tableHeight = tableView.sizeThatFits(CGSize(width: ChidoriMenu.width, height: CGFloat.greatestFiniteMagnitude)).height.rounded()
         return tableHeight
     }
@@ -174,7 +174,7 @@ class ChidoriMenu: UIViewController {
 // MARK: - UITableViewDelegate
 
 extension ChidoriMenu: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard section != tableView.numberOfSections - 1 else { return nil }
 
         let footerView = UIView()
@@ -182,14 +182,14 @@ extension ChidoriMenu: UITableViewDelegate {
         return footerView
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionDividerHeight: CGFloat = 8.0
 
         // If it's the last section, don't show a divider, otherwise do
         return section == tableView.numberOfSections - 1 ? 0.0 : sectionDividerHeight
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         didSelectActionAtIndexPath(indexPath)
         dismiss(animated: true, completion: nil)
     }
@@ -245,20 +245,20 @@ extension ChidoriMenu {
 // MARK: - Custom View Controller Presentation
 
 extension ChidoriMenu: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transitionController = ChidoriAnimationController(type: .presentation)
         return transitionController
     }
 
-    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return transitionController
     }
 
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return ChidoriAnimationController(type: .dismissal)
     }
     
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         let controller = ChidoriPresentationController(presentedViewController: presented, presenting: presenting)
         controller.transitionDelegate = self
         return controller
@@ -267,7 +267,7 @@ extension ChidoriMenu: UIViewControllerTransitioningDelegate {
 
 // MARK: - Presentation Controller Interactive Delegate
 extension ChidoriMenu: ChidoriPresentationControllerDelegate {
-    func didTapOverlayView(_ chidoriPresentationController: ChidoriPresentationController) {
+    public func didTapOverlayView(_ chidoriPresentationController: ChidoriPresentationController) {
         transitionController?.cancelTransition()
         dismiss(animated: true, completion: nil)
     }
@@ -275,6 +275,6 @@ extension ChidoriMenu: ChidoriPresentationControllerDelegate {
 
 // MARK: - Action Protocol
 
-protocol ChidoriDelegate: class {
+public protocol ChidoriDelegate: AnyObject {
     func didSelectAction(_ action: UIAction)
 }
