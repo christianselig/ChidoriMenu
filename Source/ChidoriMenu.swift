@@ -275,6 +275,6 @@ extension ChidoriMenu: ChidoriPresentationControllerDelegate {
 
 // MARK: - Action Protocol
 
-protocol ChidoriDelegate: class {
+protocol ChidoriDelegate: AnyObject {
     func didSelectAction(_ action: UIAction)
 }
